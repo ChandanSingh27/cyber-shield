@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0.8
+Name=CyberShield
+Comment=Network Intrusion Detection System
+Exec=cyber-shield
+Icon=${SNAP}/meta/gui/icon.png
+Terminal=false
+Type=Application
+Categories=Utility;Application;

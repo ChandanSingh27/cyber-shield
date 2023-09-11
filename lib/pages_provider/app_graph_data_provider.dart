@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
 class CpuUsageStructure {
-  double xCpuUsages;
+  double xidle;
   double yTimes;
-  CpuUsageStructure(this.xCpuUsages,this.yTimes);
+  double ioWait;
+  double sys;
+  double user;
+  CpuUsageStructure({required this.xidle, required this.yTimes,required this.ioWait,required this.sys,required this.user});
 }
 class AppGraphDataProvider with ChangeNotifier {
   List<CpuUsageStructure> cpuUsageList = [];
@@ -18,8 +21,9 @@ class AppGraphDataProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  addDataIntoCpuUsageList (double data,double time) {
-    cpuUsageList.add(CpuUsageStructure(100-data, time));
+  addDataIntoCpuUsageList (CpuUsageStructure cpuUsageStructure) {
+    cpuUsageList.add(cpuUsageStructure);
+    if(cpuUsageStructure.yTimes == 59) cpuUsageList.clear();
     notifyListeners();
   }
 }

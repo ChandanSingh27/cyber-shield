@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                   cursor: "_",
-                  speed: const Duration(milliseconds: 800),
+                  speed: const Duration(milliseconds: 500),
                 ),
               ],
 

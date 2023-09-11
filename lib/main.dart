@@ -5,8 +5,10 @@ import 'package:cyber_shield/pages/splash_screen.dart';
 import 'package:cyber_shield/pages_provider/app_drawer_log_files_provider.dart';
 import 'package:cyber_shield/pages_provider/app_drawer_provider.dart';
 import 'package:cyber_shield/pages_provider/app_graph_data_provider.dart';
+import 'package:cyber_shield/pages_provider/app_home_page_provider.dart';
 import 'package:cyber_shield/pages_provider/system_scanning_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +18,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => AppDrawerProvider(),),
         ChangeNotifierProvider(create: (context) => SystemScanningProvider(),),
+        ChangeNotifierProvider(create: (context) => AppHomePageProvider(),),
         ChangeNotifierProvider(create: (context) => AppDrawerLogFilesProvider(),),
         ChangeNotifierProvider(create: (context) => AppGraphDataProvider(),)
       ],
@@ -41,6 +44,9 @@ class CyberShield extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "Poppins",
       ),
+        navigatorObservers: [FlutterSmartDialog.observer],
+        // here
+        builder: FlutterSmartDialog.init(),
       home: const SplashScreen()
     );
   }

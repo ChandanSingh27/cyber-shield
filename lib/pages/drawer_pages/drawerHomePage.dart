@@ -1,6 +1,7 @@
 import 'package:cyber_shield/pages/Graph/memory_graph.dart';
 import 'package:cyber_shield/pages_provider/app_graph_data_provider.dart';
 import 'package:cyber_shield/widgets/custom_box_widgets.dart';
+import 'package:cyber_shield/widgets/frosted_glass.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
           const SizedBox(height: 10,),
           Row(
             children: [
-              Consumer<AppGraphDataProvider>(builder: (context, appGraphDataProvider, child) => UtilizationWidgets(title: "Cpu Utilization",subTitle: "cpu usages:",usages: appGraphDataProvider.cpuUsageList.isNotEmpty ?appGraphDataProvider.cpuUsageList[appGraphDataProvider.cpuUsageList.length-1].xCpuUsages : 0),),
+              Consumer<AppGraphDataProvider>(builder: (context, appGraphDataProvider, child) => UtilizationWidgets(title: "Cpu Utilization",subTitle: "cpu usages:",usages: appGraphDataProvider.cpuUsageList.isNotEmpty ?appGraphDataProvider.cpuUsageList[appGraphDataProvider.cpuUsageList.length-1].xidle : 0),),
               const SizedBox(width: 10,),
               UtilizationWidgets(title: "Memory Utilization",subTitle: "memory usages:",usages: 20,iconColor: AppColors.lightShadeRed),
             ],
@@ -54,10 +55,11 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
                       BoxShadow(
                         blurRadius: 5,
                         blurStyle: BlurStyle.outer,
-                        color: Colors.white.withOpacity(0.5),
+                        color: Colors.white.withOpacity(0.2),
                       )
                     ],
-                    color: const Color(0xff212025),
+                    // color: const Color(0xff212025),
+                    color: Colors.transparent
                 ),
                 child: const CpuAndMemoryUtilizationGraph(),
               ))

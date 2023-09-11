@@ -2,13 +2,19 @@ import 'dart:async';
 import 'package:cyber_shield/pages/drawer_pages/drawerHomePage.dart';
 import 'package:cyber_shield/pages/drawer_pages/drawerScanningPage.dart';
 import 'package:cyber_shield/pages_provider/app_drawer_provider.dart';
+import 'package:cyber_shield/pages_provider/app_home_page_provider.dart';
+import 'package:cyber_shield/script_function/checking_root_password_method.dart';
 import 'package:cyber_shield/script_function/script_useful_method.dart';
+import 'package:cyber_shield/share_preference.dart';
 import 'package:cyber_shield/widgets/app_drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:system_info2/system_info2.dart';
 import '../constant/colors.dart';
 import '../pages_provider/app_graph_data_provider.dart';
 import '../shortcut_key.dart';
@@ -23,6 +29,9 @@ class AppHomePage extends StatefulWidget {
 }
 
 class _AppHomePageState extends State<AppHomePage> {
+
+  final passwordController = TextEditingController();
+  SmartDialogController smartDialogController = SmartDialogController();
   List<Widget> screensList = [
     const DrawerDashBoard(),
     const DrawerScanningPage(),
@@ -46,6 +55,7 @@ class _AppHomePageState extends State<AppHomePage> {
     // TODO: implement initState
     super.initState();
     getCpuUsages(context);
+    checkTheUserPassword();
   }
 
   @override
@@ -87,11 +97,26 @@ class _AppHomePageState extends State<AppHomePage> {
                   ],
                 ),
               ),
+              floatingActionButton: FloatingActionButton(onPressed: (){checkTheUserPassword();},),
             ),
           ),
         ));
   }
 
+  checkTheUserPassword() async{
+    String? password = await SharePreferences.getPassword();
+    if(password == null) {
+       getUserComputerPassword(context);
+    }else{
+      RootPassword.runRootCheckingMethod(context: context, scriptPath: "/home/chandan/flutter project/cyber_shield/lib/scripts/installation_script.sh",password: password).then((value){
+        if(value){
+          return;
+        }else{
+          getUserComputerPassword(context);
+        }
+      });
+    }
+  }
   getCpuUsages(BuildContext context) {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       ScriptUseFulMethods.cpuUsageMethod(
@@ -99,5 +124,78 @@ class _AppHomePageState extends State<AppHomePage> {
           scriptPath:
               "/home/chandan/flutter project/cyber_shield/lib/scripts/cpuUsage.sh");
     });
+  }
+
+  getUserComputerPassword(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    SmartDialog.show(
+      controller: smartDialogController,
+      clickMaskDismiss: false,
+
+      // onDismiss: () => scanningProvider.toggleStopFullCpuUsageScanning(true),
+      builder: (context) => Container(
+        margin: const EdgeInsets.all(50),
+        padding: const EdgeInsets.all(20),
+        width: 500,
+        height: 250,
+        decoration: BoxDecoration(
+            color: AppColors.secondaryColor,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.white.withOpacity(0.21))
+        ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            const Positioned(
+                top: -90,
+                left: 155,
+                child: CircleAvatar(backgroundColor: Colors.blue,radius: 70,child: Icon(Ionicons.person_outline,size: 40,),)),
+            Align(
+              alignment: Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 30,),
+                  Text(
+                    "Hey, ${SysInfo.userName}"??"Hey Buddy",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppColors.primaryFontColor,
+                    ),
+                  ),
+                  const SizedBox(height: 30,),
+                  Consumer<AppHomePageProvider>(builder: (context, provider, child) => TextField(
+                    controller: passwordController,
+                    autofocus: true,
+                    obscureText: !provider.isPasswordVisible,
+                    obscuringCharacter: "X",
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        filled: true,
+                        fillColor: AppColors.ebonyColor,
+                        hintStyle: const TextStyle(color: Colors.grey,fontSize: 15,),
+                        hintText: "Your root password",
+                        suffixIcon: GestureDetector(
+                          onTap: provider.toggleThePasswordVisible,
+                            child: Icon(provider.isPasswordVisible ? Ionicons.eye_off : Ionicons.eye)),
+                    ),
+                    style: TextStyle(fontSize: 15,color: AppColors.primaryLightColor),
+                    onSubmitted: (value) {
+                      SharePreferences.setPassword(password: value);
+                      SmartDialog.dismiss();
+                      checkTheUserPassword();
+                    },
+                  ),)
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

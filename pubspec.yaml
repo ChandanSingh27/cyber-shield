@@ -32,6 +32,8 @@ dependencies:
 
   #this package use for running the script
   process_run: ^0.13.1
+  flutter_smart_dialog: ^4.9.4
+  shared_preferences: ^2.2.1
 
 dev_dependencies:
   flutter_test:
@@ -78,5 +80,5 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 #flutter_native_splash:
 #  color: "#000000"
-#  image: assets/logo.png
+#  image: assets/icon.png
 #  branding_mode: center

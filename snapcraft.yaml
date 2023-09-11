@@ -1,0 +1,23 @@
+name: cyber-shield
+version: 1.0.0
+summary: Network Intrusion Detection System
+description: Network Intrusion Detection System
+confinement: strict
+base: core18
+grade: stable
+icon: snap/gui/icon.png
+
+
+apps:
+  counter:
+    command: cyber-shield
+    extensions: [flutter-master]
+    plugs:
+      - network
+      - desktop
+
+parts:
+  counter:
+    source: .
+    plugin: flutter
+    flutter-target: lib/main.dart # The main entry-point file of the application

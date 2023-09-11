@@ -18,10 +18,18 @@ class _CpuAndMemoryUtilizationGraphState extends State<CpuAndMemoryUtilizationGr
     return Consumer<AppGraphDataProvider>(
       builder: (context, graphDataProvider, child) =>
           SfCartesianChart(
+            crosshairBehavior: CrosshairBehavior(
+              enable: true,
+              activationMode: ActivationMode.doubleTap
+            ),
+            trackballBehavior: TrackballBehavior(
+              enable: true,
+              activationMode: ActivationMode.singleTap
+            ),
             enableAxisAnimation: true,
             enableSideBySideSeriesPlacement: true,
             title: ChartTitle(text: "CPU Utilization Graph",textStyle: TextStyle(fontSize: 18,color: AppColors.primaryLightColor),alignment: ChartAlignment.far),
-            primaryXAxis: NumericAxis(
+            primaryYAxis: NumericAxis(
                 majorGridLines: const MajorGridLines(
                   width: 0,
                   color: Colors.transparent
@@ -31,32 +39,62 @@ class _CpuAndMemoryUtilizationGraphState extends State<CpuAndMemoryUtilizationGr
                 title: AxisTitle(
                     text: "Cpu Usage in Percentage",
                     textStyle: TextStyle(fontSize: 18,color: AppColors.primaryLightColor.withOpacity(0.6))
-                )
+                ),
+                labelFormat: "{value} %"
             ),
-            primaryYAxis: NumericAxis(
+            primaryXAxis: NumericAxis(
               majorGridLines: const MajorGridLines(
                   width: 0,
                   color: Colors.transparent
               ),
               maximum: 60,
-              minimum: 1,
+              minimum: 0,
               title: AxisTitle(
-                  text: "Time in Second",
-                  textStyle: TextStyle(fontSize: 18,color: AppColors.primaryLightColor.withOpacity(0.6))
+                  text: "Time in Milisecond",
+                  textStyle: TextStyle(fontSize: 18,color: AppColors.primaryLightColor.withOpacity(0.6)),
               ),
+              labelFormat: "{value} S"
             ),
             series: <SplineSeries>[
               SplineSeries<CpuUsageStructure,double>(
                 color: Colors.blue,
                 dataSource: graphDataProvider.cpuUsageList,
-                xValueMapper: (datum, index) => datum.xCpuUsages,
-                yValueMapper: (datum, index) => datum.yTimes,
+                xValueMapper: (datum, index) => datum.yTimes,
+                yValueMapper: (datum, index) => datum.xidle,
+                dataLabelSettings: DataLabelSettings(
+                  isVisible: true,
+                  color: Colors.white
+                )
               ),
               SplineSeries<CpuUsageStructure,double>(
-                color: Colors.red,
-                dataSource: graphDataProvider.cpuUsageList,
-                xValueMapper: (datum, index) => datum.yTimes,
-                yValueMapper: (datum, index) => datum.xCpuUsages,
+                  color: Colors.red,
+                  dataSource: graphDataProvider.cpuUsageList,
+                  xValueMapper: (datum, index) => datum.yTimes,
+                  yValueMapper: (datum, index) => datum.ioWait,
+                  dataLabelSettings: DataLabelSettings(
+                      isVisible: true,
+                      color: Colors.red
+                  )
+              ),
+              SplineSeries<CpuUsageStructure,double>(
+                  color: Colors.green,
+                  dataSource: graphDataProvider.cpuUsageList,
+                  xValueMapper: (datum, index) => datum.yTimes,
+                  yValueMapper: (datum, index) => datum.sys,
+                  dataLabelSettings: DataLabelSettings(
+                      isVisible: true,
+                      color: Colors.red
+                  )
+              ),
+              SplineSeries<CpuUsageStructure,double>(
+                  color: Colors.orange,
+                  dataSource: graphDataProvider.cpuUsageList,
+                  xValueMapper: (datum, index) => datum.yTimes,
+                  yValueMapper: (datum, index) => datum.user,
+                  dataLabelSettings: DataLabelSettings(
+                      isVisible: true,
+                      color: Colors.red
+                  )
               ),
             ],
           ),
