@@ -12,7 +12,7 @@ class SystemScanningProvider with ChangeNotifier {
 
   List<String> fullCpuUsageList = [];
 
-  ScrollController listViewController = ScrollController();
+  ScrollController terminalController = ScrollController();
   ScrollController fullCpuUsageLogListViewController = ScrollController();
 
   toggleStopFullCpuUsageScanning(bool value) {
@@ -21,13 +21,17 @@ class SystemScanningProvider with ChangeNotifier {
   }
   addDataIntoScriptOutPutList(String data) {
     scriptOutput.add(data);
-    listViewController.animateTo(listViewController.position.maxScrollExtent, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+    terminalController.animateTo(terminalController.position.maxScrollExtent, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+    notifyListeners();
+  }
+  addScanningData(String data) {
+    scriptOutput.add(data);
+    terminalController.animateTo(terminalController.position.maxScrollExtent, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
     notifyListeners();
   }
 
   addDataIntoFullCpuUsageList(String data) {
     fullCpuUsageList.add(data);
-    print(data);
     fullCpuUsageLogListViewController.animateTo(fullCpuUsageLogListViewController.position.maxScrollExtent, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
     notifyListeners();
   }

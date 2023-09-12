@@ -48,11 +48,11 @@ class _AppDrawerState extends State<AppDrawer> {
                 children: [
                   IconWithTextButton(id: 0,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.laptop_outline, buttonName: "System"),
                   IconWithTextButton(id: 1,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.scan_outline, buttonName: "Scanning"),
-                  IconWithTextButton(id: 2,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.flash_outline, buttonName: "Ports"),
-                  IconWithTextButton(id: 3,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.file_tray_full_outline, buttonName: "Log Files"),
-                  IconWithTextButton(id: 4,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.construct_outline, buttonName: "Added Ruled"),
-                  IconWithTextButton(id: 5,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.alert_outline, buttonName: "Alert"),
-                  IconWithTextButton(id: 6,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.help_outline, buttonName: "Help"),
+                  // IconWithTextButton(id: 2,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.flash_outline, buttonName: "Ports"),
+                  IconWithTextButton(id: 2,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.file_tray_full_outline, buttonName: "Log Files"),
+                  IconWithTextButton(id: 3,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.construct_outline, buttonName: "Added Ruled"),
+                  IconWithTextButton(id: 4,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.alert_outline, buttonName: "Alert"),
+                  IconWithTextButton(id: 5,hideText: appDrawerProvider.isDrawerOpen, buttonIcons: Ionicons.help_outline, buttonName: "Help"),
                 ],
               ),
               Container(

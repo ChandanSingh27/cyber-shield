@@ -2,6 +2,7 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:cyber_shield/pages/app_home_page.dart';
 import 'package:cyber_shield/pages/splash_screen.dart';
+import 'package:cyber_shield/pages_provider/app_drawer_add_added_rule_page_provider.dart';
 import 'package:cyber_shield/pages_provider/app_drawer_log_files_provider.dart';
 import 'package:cyber_shield/pages_provider/app_drawer_provider.dart';
 import 'package:cyber_shield/pages_provider/app_graph_data_provider.dart';
@@ -19,6 +20,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => AppDrawerProvider(),),
         ChangeNotifierProvider(create: (context) => SystemScanningProvider(),),
         ChangeNotifierProvider(create: (context) => AppHomePageProvider(),),
+        ChangeNotifierProvider(create: (context) => AppDrawerAddedRulePageProvider(),),
         ChangeNotifierProvider(create: (context) => AppDrawerLogFilesProvider(),),
         ChangeNotifierProvider(create: (context) => AppGraphDataProvider(),)
       ],

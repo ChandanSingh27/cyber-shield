@@ -6,7 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../script_function/scanning_system_using_snort.dart';
 import '../../script_function/script_useful_method.dart';
+import '../../script_function/snort_rule_update.dart';
 
 class DrawerScanningPage extends StatefulWidget {
   const DrawerScanningPage({super.key});
@@ -22,7 +24,10 @@ class _DrawerScanningPageState extends State<DrawerScanningPage> with AutomaticK
   void initState() {
     // TODO: implement initState
     super.initState();
-    ScriptUseFulMethods.installRequiredTools(context: context, scriptPath: "/home/chandan/flutter project/cyber_shield/lib/scripts/installation_script.sh");
+    // ScriptUseFulMethods.installRequiredTools(context: context, scriptPath: "/home/chandan/flutter project/cyber_shield/lib/scripts/installation_script.sh");
+    // SnortRuleUpdation.scan(context);
+    ScanningSystemUsingSnort.scan(context);
+
   }
 
 
@@ -47,11 +52,14 @@ class _DrawerScanningPageState extends State<DrawerScanningPage> with AutomaticK
                   Text("Terminal",style: TextStyle(color: Colors.blue,fontSize: 18,fontWeight: FontWeight.bold),),
             ],
           )),
-          Expanded(
-            child: ListView.builder(
-              controller: data.listViewController,
-              itemCount: data.scriptOutput.length,
-              itemBuilder: (context, index) => Text(data.scriptOutput[index],style: TextStyle(color: Colors.white),),),
+          Flexible(
+            child: Consumer<SystemScanningProvider>(
+              builder: (context, scanningProvider, child) => ListView.builder(
+                controller: scanningProvider.terminalController,
+                itemCount: scanningProvider.scriptOutput.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => Text(scanningProvider.scriptOutput[index],style: TextStyle(color: Colors.white.withOpacity(0.7)),),),
+            ),
           ),
         ],
       ),

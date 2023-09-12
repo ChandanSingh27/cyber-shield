@@ -24,6 +24,7 @@ installTheTools() {
 	printTheOutput snort
 	printTheOutput nmap
 	printTheOutput mpstat
+	printTheOutput gedit
 }
 
 installTheTools

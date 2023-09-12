@@ -1,12 +1,17 @@
 import 'dart:async';
+import 'package:cyber_shield/pages/drawer_pages/drawerAddRulePage.dart';
+import 'package:cyber_shield/pages/drawer_pages/drawerHelpPage.dart';
 import 'package:cyber_shield/pages/drawer_pages/drawerHomePage.dart';
 import 'package:cyber_shield/pages/drawer_pages/drawerScanningPage.dart';
 import 'package:cyber_shield/pages_provider/app_drawer_provider.dart';
 import 'package:cyber_shield/pages_provider/app_home_page_provider.dart';
 import 'package:cyber_shield/script_function/checking_root_password_method.dart';
+import 'package:cyber_shield/script_function/scanning_system_using_snort.dart';
 import 'package:cyber_shield/script_function/script_useful_method.dart';
 import 'package:cyber_shield/share_preference.dart';
 import 'package:cyber_shield/widgets/app_drawer.dart';
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -16,9 +21,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:system_info2/system_info2.dart';
 import '../constant/colors.dart';
-import '../pages_provider/app_graph_data_provider.dart';
+import '../pages_provider/app_drawer_add_added_rule_page_provider.dart';
+import '../script_function/adding_new_local_rules.dart';
 import '../shortcut_key.dart';
 import '../widgets/custom_app_bar.dart';
+import 'drawer_options_screen_lists.dart';
 import 'drawer_pages/drawerLogFilesPage.dart';
 
 class AppHomePage extends StatefulWidget {
@@ -32,30 +39,14 @@ class _AppHomePageState extends State<AppHomePage> {
 
   final passwordController = TextEditingController();
   SmartDialogController smartDialogController = SmartDialogController();
-  List<Widget> screensList = [
-    const DrawerDashBoard(),
-    const DrawerScanningPage(),
-    Container(
-      color: Colors.red,
-    ),
-    const DrawerLogFilesPage(),
-    Container(
-      color: Colors.green,
-    ),
-    Container(
-      color: Colors.black,
-    ),
-    Container(
-      color: Colors.grey,
-    ),
-  ];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCpuUsages(context);
     checkTheUserPassword();
+    Provider.of<AppDrawerAddedRulePageProvider>(context,listen: false).getRuleFiles();
+    getCpuUsages(context);
   }
 
   @override
@@ -97,7 +88,18 @@ class _AppHomePageState extends State<AppHomePage> {
                   ],
                 ),
               ),
-              floatingActionButton: FloatingActionButton(onPressed: (){checkTheUserPassword();},),
+              // floatingActionButton: FloatingActionButton(
+              //   onPressed: (){
+              //     ElegantNotification.info(
+              //         title:  Text("Alert Detected",style: TextStyle(color: AppColors.primaryLightColor),),
+              //         description:  Text("This account will be updated ",style: TextStyle(color: AppColors.primaryLightColor)),
+              //       background: const Color(0xff212025),
+              //       width: 400,
+              //       notificationPosition: NotificationPosition.bottomRight,
+              //       progressIndicatorBackground: Colors.white,
+              //     ).show(context);
+              //   },
+              // ),
             ),
           ),
         ));

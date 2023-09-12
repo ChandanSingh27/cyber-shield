@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cmd_plus/cmd_plus.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +19,20 @@ class DrawerLogFilesPage extends StatefulWidget {
 
 class _DrawerLogFilesPageState extends State<DrawerLogFilesPage> {
   List<String> daysList = ["Yesterday","Today","Tomorrow"];
+  String contents = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    readData();
+  }
+
+  readData() async {
+    File file = File("/var/log/snort/snort.alert.fast");
+    if(await file.exists())contents = file.readAsStringSync();
+    setState(() {
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -27,7 +44,51 @@ class _DrawerLogFilesPageState extends State<DrawerLogFilesPage> {
         borderRadius: BorderRadius.circular(30),
         border: Border.all(color: Colors.grey.shade700.withOpacity(0.5),width: 1)
       ),
-      child: Column(
+      child: SingleChildScrollView(child: Text(contents,style: TextStyle(color: Colors.white),)),
+    );
+  }
+}
+
+
+Widget searchBar(Size size){
+  return Container(
+    width: size.width * 0.3,
+    height: 45,
+    margin: const EdgeInsets.only(left: 10),
+    decoration: BoxDecoration(
+        color: const Color(0xff000000),
+        boxShadow: [
+          BoxShadow(
+              blurRadius: 5,
+              blurStyle: BlurStyle.outer,
+              color: Colors.white.withOpacity(0.2)
+          )
+        ],
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: Colors.grey.shade700.withOpacity(0.5), width: 1)),
+    child: TextField(
+      decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.1),
+          prefixIcon: Icon(
+            CupertinoIcons.search,
+            color: AppColors.secondaryFontColor,
+          ),
+          hintText: "Search log files",
+          hintStyle: TextStyle(color: AppColors.secondaryFontColor),
+          contentPadding: const EdgeInsets.only(bottom: 10, left: 10)),
+      style: TextStyle(color: AppColors.primaryLightColor),
+      cursorColor: Colors.blue,
+    ),
+  );
+}
+
+/*
+Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -257,50 +318,20 @@ class _DrawerLogFilesPageState extends State<DrawerLogFilesPage> {
                 ],
               ),
             ],
+          ),
+          const SizedBox(height: 50,),
+          RichText(
+            text: TextSpan(
+              text: "This is a long string with the words 'hello' and 'world'.",
+              children: [
+                TextSpan(
+                  text: "hello",
+                  style: TextStyle(color: Colors.red),
+                  recognizer: TapGestureRecognizer()..onTap = () => print("hello"),
+                ),
+              ],
+            ),
           )
         ],
-      ),
-    );
-  }
-}
-
-Widget searchBar(Size size){
-  return Container(
-    width: size.width * 0.3,
-    height: 45,
-    margin: const EdgeInsets.only(left: 10),
-    decoration: BoxDecoration(
-        color: const Color(0xff000000),
-        boxShadow: [
-          BoxShadow(
-              blurRadius: 5,
-              blurStyle: BlurStyle.outer,
-              color: Colors.white.withOpacity(0.2)
-          )
-        ],
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: Colors.grey.shade700.withOpacity(0.5), width: 1)),
-    child: TextField(
-      decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide.none,
-          ),
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.1),
-          prefixIcon: Icon(
-            CupertinoIcons.search,
-            color: AppColors.secondaryFontColor,
-          ),
-          hintText: "Search log files",
-          hintStyle: TextStyle(color: AppColors.secondaryFontColor),
-          contentPadding: const EdgeInsets.only(bottom: 10, left: 10)),
-      style: TextStyle(color: AppColors.primaryLightColor),
-      cursorColor: Colors.blue,
-    ),
-  );
-}
-
-/*
-
+      )
  * */

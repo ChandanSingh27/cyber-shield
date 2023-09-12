@@ -30,7 +30,7 @@ class HelpPage extends Intent {
 }
 
 Map<ShortcutActivator, Intent> shortcutsKey  = <ShortcutActivator, Intent>{
-  const SingleActivator(LogicalKeyboardKey.space): const ToggleDrawer(),
+  LogicalKeySet(LogicalKeyboardKey.shiftRight): const ToggleDrawer(),
   LogicalKeySet(LogicalKeyboardKey.control,LogicalKeyboardKey.keyQ): const SystemPage(),
   LogicalKeySet(LogicalKeyboardKey.control,LogicalKeyboardKey.keyW): const ScanningPage(),
   LogicalKeySet(LogicalKeyboardKey.control,LogicalKeyboardKey.keyE): const PortsPage(),

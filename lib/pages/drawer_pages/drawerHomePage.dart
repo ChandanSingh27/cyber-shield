@@ -33,9 +33,6 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Analytics Overview",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppColors.primaryLightColor),),
-          const SizedBox(height: 10,),
           Row(
             children: [
               Consumer<AppGraphDataProvider>(builder: (context, appGraphDataProvider, child) => UtilizationWidgets(title: "Cpu Utilization",subTitle: "cpu usages:",usages: appGraphDataProvider.cpuUsageList.isNotEmpty ?appGraphDataProvider.cpuUsageList[appGraphDataProvider.cpuUsageList.length-1].xidle : 0),),

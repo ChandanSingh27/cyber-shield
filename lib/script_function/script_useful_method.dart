@@ -57,7 +57,7 @@ class ScriptUseFulMethods {
         DateTime now = DateTime.now();
         double time = double.tryParse(now.second.toString())!;
         // Provider.of<AppGraphDataProvider>(context,listen: false).addDataIntoCpuUsageList(returnCpuUsage(data),time);
-        Provider.of<AppGraphDataProvider>(context,listen: false).addDataIntoCpuUsageList(CpuUsageStructure(xidle: returnCpuUsage(data, 1), yTimes: time, ioWait: returnCpuUsage(data, 7), sys: returnCpuUsage(data, 8), user: returnCpuUsage(data, 10)));
+        Provider.of<AppGraphDataProvider>(context,listen: false).addDataIntoCpuUsageList(CpuUsageStructure(xidle: 100 - returnCpuUsage(data, 1), yTimes: time, ioWait: returnCpuUsage(data, 7), sys: returnCpuUsage(data, 8), user: returnCpuUsage(data, 10)));
       });
       process.stderr.transform(utf8.decoder).listen((data) {
 

@@ -18,11 +18,16 @@ class _CpuAndMemoryUtilizationGraphState extends State<CpuAndMemoryUtilizationGr
     return Consumer<AppGraphDataProvider>(
       builder: (context, graphDataProvider, child) =>
           SfCartesianChart(
-            crosshairBehavior: CrosshairBehavior(
-              enable: true,
-              activationMode: ActivationMode.doubleTap
+            legend: const Legend(
+              height: "70%",
+              width: "100%",
+              padding: 3,
+              isVisible: true,
+              title: LegendTitle(text: "Graph Info",textStyle: TextStyle(color: Colors.white,),alignment: ChartAlignment.near),
+              alignment: ChartAlignment.near,
+              textStyle: TextStyle(color: Colors.white,fontSize: 12)
             ),
-            trackballBehavior: TrackballBehavior(
+            crosshairBehavior: CrosshairBehavior(
               enable: true,
               activationMode: ActivationMode.singleTap
             ),
@@ -50,7 +55,7 @@ class _CpuAndMemoryUtilizationGraphState extends State<CpuAndMemoryUtilizationGr
               maximum: 60,
               minimum: 0,
               title: AxisTitle(
-                  text: "Time in Milisecond",
+                  text: "Time in Second",
                   textStyle: TextStyle(fontSize: 18,color: AppColors.primaryLightColor.withOpacity(0.6)),
               ),
               labelFormat: "{value} S"
@@ -61,40 +66,28 @@ class _CpuAndMemoryUtilizationGraphState extends State<CpuAndMemoryUtilizationGr
                 dataSource: graphDataProvider.cpuUsageList,
                 xValueMapper: (datum, index) => datum.yTimes,
                 yValueMapper: (datum, index) => datum.xidle,
-                dataLabelSettings: DataLabelSettings(
-                  isVisible: true,
-                  color: Colors.white
-                )
+                legendItemText: "Idle",
               ),
               SplineSeries<CpuUsageStructure,double>(
                   color: Colors.red,
                   dataSource: graphDataProvider.cpuUsageList,
                   xValueMapper: (datum, index) => datum.yTimes,
                   yValueMapper: (datum, index) => datum.ioWait,
-                  dataLabelSettings: DataLabelSettings(
-                      isVisible: true,
-                      color: Colors.red
-                  )
+                legendItemText: "io Wait"
               ),
               SplineSeries<CpuUsageStructure,double>(
                   color: Colors.green,
                   dataSource: graphDataProvider.cpuUsageList,
                   xValueMapper: (datum, index) => datum.yTimes,
                   yValueMapper: (datum, index) => datum.sys,
-                  dataLabelSettings: DataLabelSettings(
-                      isVisible: true,
-                      color: Colors.red
-                  )
+                  legendItemText: "system"
               ),
               SplineSeries<CpuUsageStructure,double>(
                   color: Colors.orange,
                   dataSource: graphDataProvider.cpuUsageList,
                   xValueMapper: (datum, index) => datum.yTimes,
                   yValueMapper: (datum, index) => datum.user,
-                  dataLabelSettings: DataLabelSettings(
-                      isVisible: true,
-                      color: Colors.red
-                  )
+                  legendItemText: "User"
               ),
             ],
           ),
