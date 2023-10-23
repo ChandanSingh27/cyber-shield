@@ -34,7 +34,7 @@ class _DrawerAddedRulePageState extends State<DrawerAddedRulePage> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppColors.primaryLightColor,),),
               GestureDetector(
                 onTap: (){
-                  PermissionOnLocalRuleFiles.permission(context);;
+                  PermissionOnLocalRuleFiles.permission(context);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
@@ -90,7 +90,7 @@ class _DrawerAddedRulePageState extends State<DrawerAddedRulePage> {
                             child: Text(ruleFileProvider.snortRuleFileList[index].fileName,style: const TextStyle(color: Colors.white),),
                           ),
                         );
-                      },) : Center(child: Text("No File Exists",style: TextStyle(color: Colors.white,fontSize: 18),),),
+                      },) : const Center(child: Text("No File Exists",style: TextStyle(color: Colors.white,fontSize: 18),),),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

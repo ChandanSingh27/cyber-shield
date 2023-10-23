@@ -29,7 +29,7 @@ class _DrawerLogFilesPageState extends State<DrawerLogFilesPage> {
 
   readData() async {
     File file = File("/var/log/snort/snort.alert.fast");
-    if(await file.exists())contents = file.readAsStringSync();
+    if(await file.exists()) contents = file.readAsStringSync();
     setState(() {
     });
   }
@@ -44,15 +44,53 @@ class _DrawerLogFilesPageState extends State<DrawerLogFilesPage> {
         borderRadius: BorderRadius.circular(30),
         border: Border.all(color: Colors.grey.shade700.withOpacity(0.5),width: 1)
       ),
-      child: SingleChildScrollView(child: Text(contents,style: TextStyle(color: Colors.white),)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          const SizedBox(height: 5,),
+          searchBar(size),
+          // Text(contents,style: const TextStyle(color: Colors.white),),
+          const SizedBox(height: 10,),
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              child: ListView.builder(
+                itemCount: 100,
+                itemBuilder: (context, index) {
+                return Text("ajsn");
+              },),
+            ),
+          ),
+          const SizedBox(height: 10,),
+        ],
+      ),
     );
   }
 }
 
+getRuleFiles() async{
+  Directory dic = Directory("/etc/snort/rules/");
+  if( await dic.exists()) {
+    List<FileSystemEntity> files = dic.listSync();
+    for (var element in files) {
+      if(element is Directory) {
+        
+      }
+      List<String> names = element.path.split('/');
+      String fileName = names[names.length-1];
+    }
+  }
+}
 
+class Struct {
+  String name;
+  bool isDictory;
+
+  Struct(this.name, this.isDictory);
+}
 Widget searchBar(Size size){
   return Container(
-    width: size.width * 0.3,
+    width: size.width * 0.36,
     height: 45,
     margin: const EdgeInsets.only(left: 10),
     decoration: BoxDecoration(
@@ -64,12 +102,12 @@ Widget searchBar(Size size){
               color: Colors.white.withOpacity(0.2)
           )
         ],
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.grey.shade700.withOpacity(0.5), width: 1)),
     child: TextField(
       decoration: InputDecoration(
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide.none,
           ),
           filled: true,

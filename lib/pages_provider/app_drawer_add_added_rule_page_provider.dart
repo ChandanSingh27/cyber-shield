@@ -10,7 +10,7 @@ class SnortRuleFile {
 class AppDrawerAddedRulePageProvider with ChangeNotifier {
 
   List<SnortRuleFile> snortRuleFileList = [];
-  String localFilePath = "/etc/snort/rules/local.rules";
+  String localFilePath = "/etc/snort/rules/rules/local.rules";
 
   PageController ruleFilePageController = PageController();
   String fileContent = "";

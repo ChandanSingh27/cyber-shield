@@ -61,33 +61,69 @@ class _CpuAndMemoryUtilizationGraphState extends State<CpuAndMemoryUtilizationGr
               labelFormat: "{value} S"
             ),
             series: <SplineSeries>[
-              SplineSeries<CpuUsageStructure,double>(
+              SplineSeries<CpuCoreStructure,double>(
                 color: Colors.blue,
-                dataSource: graphDataProvider.cpuUsageList,
+                width: 2,
+                dataSource: graphDataProvider.cpuCoreUsageList,
                 xValueMapper: (datum, index) => datum.yTimes,
-                yValueMapper: (datum, index) => datum.xidle,
-                legendItemText: "Idle",
+                yValueMapper: (datum, index) => datum.cpuCoreList[0],
+                legendItemText: "CPU 1",
               ),
-              SplineSeries<CpuUsageStructure,double>(
+              SplineSeries<CpuCoreStructure,double>(
                   color: Colors.red,
-                  dataSource: graphDataProvider.cpuUsageList,
+                  width: 2,
+                  dataSource: graphDataProvider.cpuCoreUsageList,
                   xValueMapper: (datum, index) => datum.yTimes,
-                  yValueMapper: (datum, index) => datum.ioWait,
-                legendItemText: "io Wait"
+                  yValueMapper: (datum, index) => datum.cpuCoreList[1],
+                legendItemText: "CPU 2"
               ),
-              SplineSeries<CpuUsageStructure,double>(
+              if(graphDataProvider.cpuCoreUsageList.length>3)SplineSeries<CpuCoreStructure,double>(
                   color: Colors.green,
-                  dataSource: graphDataProvider.cpuUsageList,
+                  width: 2,
+                  dataSource: graphDataProvider.cpuCoreUsageList,
                   xValueMapper: (datum, index) => datum.yTimes,
-                  yValueMapper: (datum, index) => datum.sys,
-                  legendItemText: "system"
+                  yValueMapper: (datum, index) => datum.cpuCoreList[2],
+                  legendItemText: "CPU 3"
               ),
-              SplineSeries<CpuUsageStructure,double>(
+              if(graphDataProvider.cpuCoreUsageList.length>4)SplineSeries<CpuCoreStructure,double>(
                   color: Colors.orange,
-                  dataSource: graphDataProvider.cpuUsageList,
+                  width: 2,
+                  dataSource: graphDataProvider.cpuCoreUsageList,
                   xValueMapper: (datum, index) => datum.yTimes,
-                  yValueMapper: (datum, index) => datum.user,
-                  legendItemText: "User"
+                  yValueMapper: (datum, index) => datum.cpuCoreList[3],
+                  legendItemText: "CPU 4"
+              ),
+              if(graphDataProvider.cpuCoreUsageList.length>5)SplineSeries<CpuCoreStructure,double>(
+                  color: Colors.grey,
+                  width: 2,
+                  dataSource: graphDataProvider.cpuCoreUsageList,
+                  xValueMapper: (datum, index) => datum.yTimes,
+                  yValueMapper: (datum, index) => datum.cpuCoreList[4],
+                  legendItemText: "CPU 5"
+              ),
+              if(graphDataProvider.cpuCoreUsageList.length>6)SplineSeries<CpuCoreStructure,double>(
+                  color: Colors.white,
+                  width: 2,
+                  dataSource: graphDataProvider.cpuCoreUsageList,
+                  xValueMapper: (datum, index) => datum.yTimes,
+                  yValueMapper: (datum, index) => datum.cpuCoreList[5],
+                  legendItemText: "CPU 6"
+              ),
+              if(graphDataProvider.cpuCoreUsageList.length>7)SplineSeries<CpuCoreStructure,double>(
+                  color: Colors.brown,
+                  width: 2,
+                  dataSource: graphDataProvider.cpuCoreUsageList,
+                  xValueMapper: (datum, index) => datum.yTimes,
+                  yValueMapper: (datum, index) => datum.cpuCoreList[6],
+                  legendItemText: "CPU 7"
+              ),
+              if(graphDataProvider.cpuCoreUsageList.length>=8)SplineSeries<CpuCoreStructure,double>(
+                  color: Colors.deepPurple,
+                  width: 2,
+                  dataSource: graphDataProvider.cpuCoreUsageList,
+                  xValueMapper: (datum, index) => datum.yTimes,
+                  yValueMapper: (datum, index) => datum.cpuCoreList[7],
+                  legendItemText: "CPU 8"
               ),
             ],
           ),

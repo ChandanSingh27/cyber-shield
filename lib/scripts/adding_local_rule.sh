@@ -1,2 +1,2 @@
 #!/bin/bash
-gedit /etc/snort/rules/local.rules
+gedit /etc/snort/rules/rules/local.rules

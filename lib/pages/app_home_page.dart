@@ -5,6 +5,7 @@ import 'package:cyber_shield/pages/drawer_pages/drawerHomePage.dart';
 import 'package:cyber_shield/pages/drawer_pages/drawerScanningPage.dart';
 import 'package:cyber_shield/pages_provider/app_drawer_provider.dart';
 import 'package:cyber_shield/pages_provider/app_home_page_provider.dart';
+import 'package:cyber_shield/python_code/run_python_code.dart';
 import 'package:cyber_shield/script_function/checking_root_password_method.dart';
 import 'package:cyber_shield/script_function/scanning_system_using_snort.dart';
 import 'package:cyber_shield/script_function/script_useful_method.dart';
@@ -46,7 +47,7 @@ class _AppHomePageState extends State<AppHomePage> {
     super.initState();
     checkTheUserPassword();
     Provider.of<AppDrawerAddedRulePageProvider>(context,listen: false).getRuleFiles();
-    getCpuUsages(context);
+    getUsages(context);
   }
 
   @override
@@ -98,6 +99,7 @@ class _AppHomePageState extends State<AppHomePage> {
               //       notificationPosition: NotificationPosition.bottomRight,
               //       progressIndicatorBackground: Colors.white,
               //     ).show(context);
+              //
               //   },
               // ),
             ),
@@ -119,12 +121,11 @@ class _AppHomePageState extends State<AppHomePage> {
       });
     }
   }
-  getCpuUsages(BuildContext context) {
+  getUsages(BuildContext context) {
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      ScriptUseFulMethods.cpuUsageMethod(
-          context: context,
-          scriptPath:
-              "/home/chandan/flutter project/cyber_shield/lib/scripts/cpuUsage.sh");
+      RunPythonCode.runCpuUtilization(context,"/home/chandan/flutter project/cyber_shield/lib/python_code/cpu_core_utilization.py");
+      RunPythonCode.runMemoryUtilization(context, "/home/chandan/flutter project/cyber_shield/lib/python_code/memory_utilization.py");
+      RunPythonCode.runNetworkUtilization(context, "/home/chandan/flutter project/cyber_shield/lib/python_code/network_utilization.py");
     });
   }
 

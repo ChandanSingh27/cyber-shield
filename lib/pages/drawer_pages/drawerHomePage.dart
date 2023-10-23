@@ -1,4 +1,5 @@
 import 'package:cyber_shield/pages/Graph/memory_graph.dart';
+import 'package:cyber_shield/pages/Graph/network_send_received_graph.dart';
 import 'package:cyber_shield/pages_provider/app_graph_data_provider.dart';
 import 'package:cyber_shield/widgets/custom_box_widgets.dart';
 import 'package:cyber_shield/widgets/frosted_glass.dart';
@@ -34,11 +35,21 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Consumer<AppGraphDataProvider>(builder: (context, appGraphDataProvider, child) => UtilizationWidgets(title: "Cpu Utilization",subTitle: "cpu usages:",usages: appGraphDataProvider.cpuUsageList.isNotEmpty ?appGraphDataProvider.cpuUsageList[appGraphDataProvider.cpuUsageList.length-1].xidle : 0),),
-              const SizedBox(width: 10,),
-              UtilizationWidgets(title: "Memory Utilization",subTitle: "memory usages:",usages: 20,iconColor: AppColors.lightShadeRed),
-            ],
+              Consumer<AppGraphDataProvider>(builder: (context, appGraphDataProvider, child) => UtilizationWidgets(networkWidget: false,title: "Cpu Utilization",subTitle: "cpu usages:",usages: appGraphDataProvider.cpuCoreUsageList.isNotEmpty ? appGraphDataProvider.cpuCoreUsageList[appGraphDataProvider.cpuCoreUsageList.length-1].cpuCoreList[0] : 0,borderColor: appGraphDataProvider.selectedGraph == 0?Colors.blue:Colors.transparent,onTap: () => appGraphDataProvider.clickSelectedGraph(0),),),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
+              Consumer<AppGraphDataProvider>(
+                builder: (context, appGraphDataProvider, child) {
+                  return UtilizationWidgets(networkWidget: false,title: "Memory Utilization",subTitle: "memory usages:",usages: appGraphDataProvider.memoryUsageList.isNotEmpty ? appGraphDataProvider.memoryUsageList[appGraphDataProvider.memoryUsageList.length-1].memory : 0,iconColor: AppColors.lightShadeRed,subTitle1: "swap memory usage",usages1: appGraphDataProvider.memoryUsageList.isNotEmpty ? appGraphDataProvider.memoryUsageList[appGraphDataProvider.memoryUsageList.length-1].swap_memory : 0,borderColor: appGraphDataProvider.selectedGraph == 1?Colors.blue:Colors.transparent,onTap: () => appGraphDataProvider.clickSelectedGraph(1),);
+                }
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
+              Consumer<AppGraphDataProvider>(
+                  builder: (context, appGraphDataProvider, child) {
+                    return UtilizationWidgets(title: "Network Utilization",subTitle: "Receiving ↓ :",subTitle1: "Sending ↑ :",usages: appGraphDataProvider.networkUsageList.isNotEmpty ? appGraphDataProvider.networkUsageList[appGraphDataProvider.networkUsageList.length-1].recevied:0, usages1: appGraphDataProvider.networkUsageList.isNotEmpty ? appGraphDataProvider.networkUsageList[appGraphDataProvider.networkUsageList.length-1].send:0,iconColor: AppColors.lightShadeRed,borderColor: appGraphDataProvider.selectedGraph == 2 ? Colors.blue:Colors.transparent,onTap: () => appGraphDataProvider.clickSelectedGraph(2),networkWidget: true,);}
+              ),
+              ],
           ),
           const SizedBox(height: 10,),
           Expanded(
@@ -58,7 +69,18 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
                     // color: const Color(0xff212025),
                     color: Colors.transparent
                 ),
-                child: const CpuAndMemoryUtilizationGraph(),
+                child: Consumer<AppGraphDataProvider>(
+                  builder: (context, appGraphDataProvider, child) {
+                    return PageView(
+                      controller: appGraphDataProvider.graphController,
+                      children: const [
+                        CpuAndMemoryUtilizationGraph(),
+                        MemoryStageGraph(),
+                        NetworkSendReceivedPacketGraph()
+                      ],
+                    );
+                  }
+                ),
               ))
         ],
       ),

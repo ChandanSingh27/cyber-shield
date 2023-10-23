@@ -29,6 +29,8 @@ dependencies:
   intl: ^0.18.1
   calendar_date_picker2: ^0.5.3
   animated_text_kit: ^4.2.2
+  mailer: ^6.0.1
+  flutter_email_sender: ^6.0.1
 
   #this package use for running the script
   process_run: ^0.13.1
