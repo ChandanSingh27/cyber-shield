@@ -2,11 +2,7 @@ import 'package:cyber_shield/const_value.dart';
 import 'package:cyber_shield/constant/colors.dart';
 import 'package:cyber_shield/python_code/run_python_code.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
-import 'package:mailer/smtp_server/gmail.dart';
 
 class DrawerHelpPage extends StatefulWidget {
   const DrawerHelpPage({super.key});
@@ -44,16 +40,16 @@ class _DrawerHelpPageState extends State<DrawerHelpPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        SmartDialog.show(builder: (context) {
+      floatingActionButton: GestureDetector(
+        onTap: () => SmartDialog.show(builder: (context) {
           return Container(
             width: 500,
             height: 300,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color:const Color(0xff212025),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.grey.shade700.withOpacity(0.5))
+                color:const Color(0xff212025),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey.shade700.withOpacity(0.5))
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,11 +69,11 @@ class _DrawerHelpPageState extends State<DrawerHelpPage> {
                     maxLines: null,
                     keyboardType: TextInputType.multiline,
                     decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                      ),
-                      hintStyle: TextStyle(color: Colors.grey,fontSize: 15),
-                      hintText: "write your query here..."
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        hintStyle: TextStyle(color: Colors.grey,fontSize: 15),
+                        hintText: "write your query here..."
                     ),
                     style: const TextStyle(color: Colors.grey,fontSize: 15),
                   ),
@@ -95,8 +91,8 @@ class _DrawerHelpPageState extends State<DrawerHelpPage> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                         decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(10)
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(10)
                         ),
                         child: const Text("Submit",style: TextStyle(color: Colors.white,fontSize: 15),),
                       ),
@@ -106,8 +102,16 @@ class _DrawerHelpPageState extends State<DrawerHelpPage> {
               ],
             ),
           );
-        },);
-      },child: const Icon(Icons.add),)
+        },),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.blue
+          ),
+          child: const Text("Report",style: TextStyle(color: Colors.white,),),
+        ),
+      )
     );
   }
 }

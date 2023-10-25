@@ -72,6 +72,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard> {
                 child: Consumer<AppGraphDataProvider>(
                   builder: (context, appGraphDataProvider, child) {
                     return PageView(
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: appGraphDataProvider.graphController,
                       children: const [
                         CpuAndMemoryUtilizationGraph(),

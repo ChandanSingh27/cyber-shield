@@ -7,10 +7,10 @@ This app is basically, characterize with some features use for knowing every det
 There are total 6 different features
 1) System section
 2) Scanning section
-3) Ports section
-4) Log Files section
-5) Added Rules section
-6) Alert section
+3) Log Files section
+4) Added Rules section
+5) Alert section
+6) Help and Report section
      ''';
     static String content = """ 
   HOW TO USE, This section in efficient mannner:::
